@@ -61,8 +61,14 @@ int main(int argc, char *argv[])
         std::cout
             << "File count: " << fileCount << std::endl;
 
-        // jump to 0x100, the start of the file entry table
-        fatFile.seekg(0x100);
+        // jump to 0xF4, the location of a pointer to the file table
+        fatFile.seekg(0xF4);
+
+        int fileTableOffset;
+        fatFile.read(reinterpret_cast<char *>(&fileTableOffset), sizeof(int));
+
+        // jump to the start of the file entry table
+        fatFile.seekg(fileTableOffset);
 
         for (auto &entry : fileTable)
         {
