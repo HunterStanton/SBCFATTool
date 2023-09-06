@@ -88,15 +88,11 @@ int main(int argc, char *argv[])
 
             entry.data = std::make_unique<char[]>(entry.fileSize);
             datFile.read(entry.data.get(), entry.fileSize);
-        }
 
-        for (int i = 0; i < fileCount; i++)
-        {
-
-            std::filesystem::path outputFilePath = std::filesystem::path(argv[4]) / fileTable[i].fileName;
+            std::filesystem::path outputFilePath = std::filesystem::path(argv[4]) / entry.fileName;
             std::filesystem::create_directories(outputFilePath.parent_path());
 
-            std::cout << "Writing file " << fileTable[i].fileName << " to path " << outputFilePath << std::endl;
+            std::cout << "Writing file " << entry.fileName << " to path " << outputFilePath << std::endl;
 
             std::ofstream outFile(outputFilePath, std::ios::binary);
             if (!outFile)
@@ -105,7 +101,7 @@ int main(int argc, char *argv[])
                 continue; // try the next file, maybe it will work
             }
 
-            outFile.write(fileTable[i].data.get(), fileTable[i].fileSize);
+            outFile.write(entry.data.get(), entry.fileSize);
         }
     }
     else

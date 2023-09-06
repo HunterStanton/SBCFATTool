@@ -1,4 +1,4 @@
-CXXFLAGS = -g -Wall -Werror -std=c++17 -I./include
+CXXFLAGS = -g -O3 -Wall -Werror -std=c++17 -I./include
 LDLIBS =
 
 PRGM  = SBCFATTool
